@@ -2,11 +2,11 @@ import Hero from "./Hero";
 import Events from "./Events";
 import { useState } from "react";
 
-const Home = () => {
+const Home = ({ dbData }) => {
   return (
     <>
       <Hero />
-      <Events />
+      <Events dbData={dbData} />
     </>
   );
 };

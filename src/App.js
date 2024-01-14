@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import Login from "./components/Login";
 import Navbar from "./components/Navbar";
@@ -9,11 +9,26 @@ import "react-toastify/dist/ReactToastify.css";
 import Profilecard from "./components/Profilecard";
 import { useEffect, useState } from "react";
 import CreateEvent from "./components/CreateEvent";
-import { storage } from "./Config/firebase-config";
+import { storage, db, auth } from "./Config/firebase-config";
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  query,
+  onSnapshot,
+  serverTimestamp,
+  orderBy,
+} from "firebase/firestore";
+import EventDetail from "./components/EventDetail";
 
 function App() {
+  const navigate = useNavigate();
+
   const [profileActive, setProfileActive] = useState(false);
+
+  const dbCollectionRef = collection(db, "Events");
 
   //create event useStates
   const [title, setTitle] = useState("");
@@ -28,11 +43,12 @@ function App() {
   //imageURL
   const [imgUrl, setImgurl] = useState(null);
 
-  //console.log(imageUpload)
+  //reading database
+  const [dbData, setDbData] = useState([]);
 
   const handleFileUpload = async (e) => {
     e.preventDefault();
-    const imageFolderRef = ref(storage, `Event-Images/${imageUpload.name}`);
+    const imageFolderRef = ref(storage, `Event-Images/${imageUpload?.name}`);
     try {
       await uploadBytes(imageFolderRef, imageUpload).then(() => {
         listAll(ref(storage, "Event-Images")).then((imgs) => {
@@ -40,10 +56,11 @@ function App() {
           imgs.items.forEach((item) => {
             console.log(item.name);
             if (item.name == imageUpload?.name) {
-              getDownloadURL(item).then((url)=>{
+              getDownloadURL(item).then((url) => {
                 setImgurl(url);
-                
-              })
+                console.log(url);
+                alert("upload succesful");
+              });
             } else {
               return null;
             }
@@ -55,9 +72,59 @@ function App() {
     }
   };
 
-  console.log(imgUrl);
+  //console.log(imgUrl);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const readDataBase = async () => {
+      const q = query(dbCollectionRef, orderBy("createdAt", "desc"));
+      try {
+        // const data = await getDocs(dbCollectionRef);
+        // const filteredData = data.docs.map((doc) => ({
+        //   ...doc.data(),
+        //   id: doc.id,
+        // }));
+        //console.log(filteredData);
+
+        onSnapshot(q, (snapshot) => {
+          const filteredData = snapshot.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+          }));
+          setDbData(filteredData);
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    readDataBase();
+  }, []);
+
+  //create event submit
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await addDoc(dbCollectionRef, {
+        currentUser: auth.currentUser.email,
+        title: title,
+        category: category,
+        description: description,
+        imgUrl: imgUrl,
+        mode: mode,
+        location: location,
+        date: date,
+        registerLink: registerLink,
+        createdAt: serverTimestamp(),
+      }).then(() => {
+        navigate("/");
+        toast.success("Event Created Successfully");
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  //console.log(dbData);
 
   return (
     <div className="App">
@@ -71,7 +138,7 @@ function App() {
         setProfileActive={setProfileActive}
       />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home dbData={dbData} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route
@@ -88,9 +155,11 @@ function App() {
               imageUpload={imageUpload}
               setImageUpload={setImageUpload}
               handleFileUpload={handleFileUpload}
+              handleFormSubmit={handleFormSubmit}
             />
           }
         />
+        <Route path="/:id" element={<EventDetail />} />
       </Routes>
     </div>
   );

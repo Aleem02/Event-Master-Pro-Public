@@ -1,7 +1,7 @@
 import React from "react";
 import Event from "./Event";
 
-const Events = () => {
+const Events = ({dbData}) => {
   return (
     <>
       <main className="events">
@@ -16,10 +16,9 @@ const Events = () => {
           </div>
         </div>
         <div className="event-card">
-          <Event />
-          <Event />
-          <Event />
-          <Event />
+          {dbData.map((item)=>(
+            <Event key={item.id} item={item} id={item.id}/>
+          ))}
         </div>
       </main>
     </>

@@ -1,18 +1,16 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const Event = () => {
+const Event = ({ item, id }) => {
   return (
-    <main className="card">
-      <img
-        src="https://images.nintendolife.com/2515e383c70aa/red-dead-redemption.large.jpg"
-        alt="image"
-        width={330}
-        height={200}
-      />
-      <p className="category">Category</p>
-      <h1>Title</h1>
-      <p>DD/MM/YYYY</p>
-    </main>
+    <Link to={`/${id}`} style={{ textDecoration: "none" }}>
+      <main className="card">
+        <img src={item.imgUrl} alt="image" width={330} height={200} />
+        <p className="category">{item.category}</p>
+        <h1>{item.title}</h1>
+        <p>{item.date}</p>
+      </main>
+    </Link>
   );
 };
 

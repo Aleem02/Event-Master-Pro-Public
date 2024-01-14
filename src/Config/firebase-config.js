@@ -1,16 +1,18 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import {getStorage} from 'firebase/storage'
+import { getStorage } from "firebase/storage";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBtN8yjG2x5LV7vQ_flUTftDVqwNEEpQJY",
-  authDomain: "event-management-system-f6601.firebaseapp.com",
-  projectId: "event-management-system-f6601",
-  storageBucket: "event-management-system-f6601.appspot.com",
-  messagingSenderId: "906172562740",
-  appId: "1:906172562740:web:305072f0c2afec6007f961",
+  apiKey: "AIzaSyA30Bwf4SiMXF_YuIsKIwWa_UUHE_7_Ijc",
+  authDomain: "fir-demo-36a54.firebaseapp.com",
+  projectId: "fir-demo-36a54",
+  storageBucket: "fir-demo-36a54.appspot.com",
+  messagingSenderId: "511951819162",
+  appId: "1:511951819162:web:8953b7c94437a53648ea23",
 };
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-export const storage = getStorage(app)
+export const storage = getStorage(app);
+export const db = getFirestore(app);

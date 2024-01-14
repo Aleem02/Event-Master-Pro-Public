@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "./createnew.css";
+import { enablePersistentCacheIndexAutoCreation } from "firebase/firestore";
 
 const CreateEvent = ({
   setTitle,
@@ -11,8 +12,16 @@ const CreateEvent = ({
   setDate,
   imageUpload,
   setImageUpload,
-  handleFileUpload
+  handleFileUpload,
+  handleFormSubmit,
 }) => {
+  const [isLocation, setIsLocation] = useState(true);
+
+  const handleModeChange = (e) => {
+    setMode(e.target.value);
+    setIsLocation(!isLocation);
+  };
+
   return (
     <form>
       <h1>Create Event</h1>
@@ -46,28 +55,33 @@ const CreateEvent = ({
           type="file"
           onChange={(e) => setImageUpload(e.target.files[0])}
         />
-        <button className={imageUpload!=null?"upload-image-active":"upload-image"} onClick={handleFileUpload}>Upload Image</button>
+        <button
+          className={
+            imageUpload != null ? "upload-image-active" : "upload-image"
+          }
+          onClick={handleFileUpload}
+        >
+          Upload Image
+        </button>
       </div>
       <div className="mode">
         <div>
           <label htmlFor="category">Choose Mode</label>
-          <select
-            name="mode"
-            id="mode"
-            onChange={(e) => setMode(e.target.value)}
-          >
+          <select name="mode" id="mode" onChange={(e) => handleModeChange(e)}>
             <option value="Offline">Offline</option>
             <option value="Online">Online</option>
           </select>
         </div>
-        <div>
-          <i className="fa-solid fa-location-dot"></i>
-          <input
-            type="text"
-            placeholder="Enter Location"
-            onChange={(e) => setLocation(e.target.value)}
-          />
-        </div>
+        {isLocation ? (
+          <div>
+            <i className="fa-solid fa-location-dot"></i>
+            <input
+              type="text"
+              placeholder="Enter Location"
+              onChange={(e) => setLocation(e.target.value)}
+            />
+          </div>
+        ) : null}
       </div>
       <div className="date">
         <label htmlFor="date">Select Date</label>
@@ -84,7 +98,9 @@ const CreateEvent = ({
           onChange={(e) => setRegisterLink(e.target.value)}
         />
       </div>
-      <button className="submit-btn">Create Event</button>
+      <button className="submit-btn" onClick={handleFormSubmit}>
+        Create Event
+      </button>
     </form>
   );
 };
