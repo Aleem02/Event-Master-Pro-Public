@@ -38,6 +38,7 @@ select {
   border: none;
   outline: none;
 }
+
 form textarea {
   width: 100%;
   height: 200px;

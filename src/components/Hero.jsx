@@ -15,7 +15,9 @@ const Hero = () => {
           Suscipit ut, iste aperiam labore perferendis iusto eum aut? Aperiam,
           nemo beatae.
         </p>
-        <button>Explore More..</button>
+        <button>
+          <a href="#available-events" style={{textDecoration:'none',color:'white'}}>Explore More..</a>
+        </button>
       </section>
       <img src={hero} alt="hero" width={400} height={400} />
     </main>

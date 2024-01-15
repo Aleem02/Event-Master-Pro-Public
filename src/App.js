@@ -20,8 +20,10 @@ import {
   onSnapshot,
   serverTimestamp,
   orderBy,
+  where,
 } from "firebase/firestore";
 import EventDetail from "./components/EventDetail";
+import Footer from "./components/Footer";
 
 function App() {
   const navigate = useNavigate();
@@ -40,11 +42,17 @@ function App() {
   const [date, setDate] = useState(null);
   const [imageUpload, setImageUpload] = useState(null);
 
+  //Category functinality useState
+  const [activeCategory, setActiveCategory] = useState("All");
+
   //imageURL
   const [imgUrl, setImgurl] = useState(null);
 
   //reading database
   const [dbData, setDbData] = useState([]);
+
+  //Loading animation useState
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleFileUpload = async (e) => {
     e.preventDefault();
@@ -54,7 +62,7 @@ function App() {
         listAll(ref(storage, "Event-Images")).then((imgs) => {
           console.log(imgs);
           imgs.items.forEach((item) => {
-            console.log(item.name);
+            //console.log(item.name);
             if (item.name == imageUpload?.name) {
               getDownloadURL(item).then((url) => {
                 setImgurl(url);
@@ -76,7 +84,10 @@ function App() {
 
   useEffect(() => {
     const readDataBase = async () => {
-      const q = query(dbCollectionRef, orderBy("createdAt", "desc"));
+      const q =
+        activeCategory == "All"
+          ? query(dbCollectionRef, orderBy("createdAt", "desc"))
+          : query(dbCollectionRef, where("category", "==", activeCategory));
       try {
         // const data = await getDocs(dbCollectionRef);
         // const filteredData = data.docs.map((doc) => ({
@@ -91,36 +102,42 @@ function App() {
             id: doc.id,
           }));
           setDbData(filteredData);
+          setIsLoading(false);
+          console.log(dbData);
         });
       } catch (err) {
         console.log(err);
       }
     };
     readDataBase();
-  }, []);
+  }, [activeCategory]);
 
   //create event submit
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await addDoc(dbCollectionRef, {
-        currentUser: auth.currentUser.email,
-        title: title,
-        category: category,
-        description: description,
-        imgUrl: imgUrl,
-        mode: mode,
-        location: location,
-        date: date,
-        registerLink: registerLink,
-        createdAt: serverTimestamp(),
-      }).then(() => {
-        navigate("/");
-        toast.success("Event Created Successfully");
-      });
-    } catch (err) {
-      console.log(err);
+    if (!title || !category || !description || !mode || !date || !registerLink) {
+      toast.error("Please Provide All Information");
+    } else {
+      try {
+        await addDoc(dbCollectionRef, {
+          currentUser: auth.currentUser.email,
+          title: title,
+          category: category,
+          description: description,
+          imgUrl: imgUrl,
+          mode: mode,
+          location: location,
+          date: date,
+          registerLink: registerLink,
+          createdAt: serverTimestamp(),
+        }).then(() => {
+          navigate("/");
+          toast.success("Event Created Successfully");
+        });
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -138,7 +155,17 @@ function App() {
         setProfileActive={setProfileActive}
       />
       <Routes>
-        <Route path="/" element={<Home dbData={dbData} />} />
+        <Route
+          path="/"
+          element={
+            <Home
+              dbData={dbData}
+              activeCategory={activeCategory}
+              setActiveCategory={setActiveCategory}
+              isLoading={isLoading}
+            />
+          }
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route

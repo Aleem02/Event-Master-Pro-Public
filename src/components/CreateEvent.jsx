@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./createnew.css";
-import { enablePersistentCacheIndexAutoCreation } from "firebase/firestore";
 
 const CreateEvent = ({
   setTitle,
@@ -22,6 +21,10 @@ const CreateEvent = ({
     setIsLocation(!isLocation);
   };
 
+  const handleImageChange = (e) => {
+    setImageUpload(e.target.files[0]);
+  };
+
   return (
     <form>
       <h1>Create Event</h1>
@@ -31,17 +34,21 @@ const CreateEvent = ({
           placeholder="Title"
           onChange={(e) => setTitle(e.target.value)}
         />
-        <div>
-          <label htmlFor="category">Choose Category</label>
+        <div style={{cursor:'auto'}}>
+          <label htmlFor="category1">Choose Category</label>
           <select
             name="category"
-            id="category"
+            id="category1"
             onChange={(e) => setCategory(e.target.value)}
+            style={{ marginBottom: "0px",cursor:'pointer' }}
           >
-            <option value="val1">Other</option>
-            <option value="val2">Value 1</option>
-            <option value="val3">Value 2</option>
-            <option value="val4">Value 3</option>
+            <option></option>
+            <option value="Career Development">Career Development</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Webinar">Webinar</option>
+            <option value="Bootcamp">Bootcamp</option>
+            <option value="Technical">Technical</option>
+            <option value="Others">Others</option>
           </select>
         </div>
       </div>
@@ -51,10 +58,7 @@ const CreateEvent = ({
       ></textarea>
       <div className="file-upload">
         <label htmlFor="file">Image</label>
-        <input
-          type="file"
-          onChange={(e) => setImageUpload(e.target.files[0])}
-        />
+        <input type="file" onChange={(e) => handleImageChange(e)} />
         <button
           className={
             imageUpload != null ? "upload-image-active" : "upload-image"
@@ -67,7 +71,12 @@ const CreateEvent = ({
       <div className="mode">
         <div>
           <label htmlFor="category">Choose Mode</label>
-          <select name="mode" id="mode" onChange={(e) => handleModeChange(e)}>
+          <select
+            name="mode"
+            id="category1"
+            onChange={(e) => handleModeChange(e)}
+            style={{ marginBottom: "0px" }}
+          >
             <option value="Offline">Offline</option>
             <option value="Online">Online</option>
           </select>
@@ -98,7 +107,7 @@ const CreateEvent = ({
           onChange={(e) => setRegisterLink(e.target.value)}
         />
       </div>
-      <button className="submit-btn" onClick={handleFormSubmit}>
+      <button className="submit-btn" onClick={handleFormSubmit} style={{cursor:'pointer'}}>
         Create Event
       </button>
     </form>

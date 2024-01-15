@@ -3,6 +3,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { auth } from "../Config/firebase-config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ const Register = () => {
       );
     } catch (err) {
       console.log(err);
+      toast.error(err.message);
     }
   };
 
@@ -45,7 +47,7 @@ const Register = () => {
 
         <label htmlFor="password">Password:</label>
         <input
-          type="text"
+          type="password"
           id="username"
           name="username"
           required
@@ -54,6 +56,9 @@ const Register = () => {
         <button type="submit" onClick={handleSubmit}>
           Register
         </button>
+        <p>
+          Already Have an Account <Link to="/login">Click Here</Link>
+        </p>
       </form>
     </div>
   );

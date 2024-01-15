@@ -1,10 +1,12 @@
 import { auth } from "../Config/firebase-config";
 import { signOut } from "firebase/auth";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Profilecard = ({ profileActive, setProfileActive }) => {
   const navigate = useNavigate();
+  const [admins, setAdmins] = useState("test1@gmail.com");
 
   const handleSignOut = async () => {
     try {
@@ -37,9 +39,11 @@ const Profilecard = ({ profileActive, setProfileActive }) => {
       <p>
         <i className="fa-solid fa-user"></i>Profile
       </p>
-      <p onClick={handleCreateEventNavigation}>
-        <i className="fa-solid fa-plus"></i>Create New Event
-      </p>
+      {admins == auth?.currentUser?.email ? (
+        <p onClick={handleCreateEventNavigation}>
+          <i className="fa-solid fa-plus"></i>Create New Event
+        </p>
+      ) : null}
       <p onClick={handleSignOut}>
         <i className="fa-solid fa-arrow-right-from-bracket"></i>Logout
       </p>

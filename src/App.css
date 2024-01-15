@@ -3,7 +3,9 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+html {
+  scroll-behavior: smooth;
+}
 .navbar {
   width: 80%;
   margin: auto;
@@ -35,7 +37,7 @@
 .login-container {
   background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   overflow: hidden;
   width: 300px;
   position: absolute;
@@ -46,6 +48,7 @@
 
 .login-form {
   padding: 20px;
+  margin-top: 0 !important;
 }
 
 .login-form h1 {
@@ -64,6 +67,7 @@
   padding: 8px;
   margin-bottom: 16px;
   box-sizing: border-box;
+  border: 1px solid black;
 }
 
 .login-form button {
@@ -159,18 +163,47 @@
   margin-bottom: 20px;
 }
 .events .search {
-  display: grid;
+  /*  display: grid;
   grid-template-columns: repeat(2, 1fr);
-  align-items: center;
-  gap: 30px;
+  align-items: center; 
+  gap: 30px; */
+  position: relative;
+}
+
+.category-dropdown p {
+  padding: 5px;
+  cursor: pointer;
+  margin-left: 5px;
+  transition: all 0.1s;
+}
+.category-dropdown p:hover {
+  background-color: #294bb9;
+  color: #ffffff;
+  font-weight: 500;
 }
 .events .search div {
   background-color: rgb(231, 231, 231);
-  display: flex;
-  height: 40px;
+  /* display: flex; */
+  /* height: 40px; */
   border-radius: 20px;
   align-items: center;
   padding-left: 20px;
+  width: 250px;
+}
+.category-dropdown {
+  position: absolute;
+  top: 50px;
+  width: 200px;
+  height: 0;
+  overflow: hidden;
+  padding-left: 0 !important;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  transition: height 0.5s;
+  z-index: 99;
+}
+.category-dropdown-active {
+  height: auto;
+  transition: height 0.5s;
 }
 .events .search div input {
   width: 100%;
@@ -191,6 +224,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 40px;
+  position: relative;
 }
 .card {
   background-color: #ffffff;
@@ -219,13 +253,33 @@
   color: gray;
   text-decoration: none;
 }
-.card p:last-child{
+.card p:last-child {
   margin-bottom: 10px;
   font-size: 14px;
   background: none;
   color: rgb(87, 87, 87);
 }
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid lightgray;
+  border-bottom-color: #294bb9;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  margin-bottom: 30px;
+}
 
-
-
-
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
