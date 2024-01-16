@@ -14,7 +14,7 @@ const Login = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password).then(() => {
         navigate("/");
-        localStorage.setItem("user", auth.currentUser.uid);
+        localStorage.setItem("user", auth.currentUser.email);
         console.log(auth.currentUser.email);
         toast.success("Log In Succesfull", {
           position: "top-right",
@@ -26,7 +26,7 @@ const Login = () => {
           progress: undefined,
           theme: "light",
         });
-        window.location.reload()
+        window.location.reload();
       });
     } catch (err) {
       console.log(err);
