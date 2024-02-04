@@ -38,10 +38,10 @@ const Profilecard = ({ profileActive, setProfileActive }) => {
       <p>
         <i className="fa-solid fa-user"></i>Profile
       </p>
-      {localStorage.getItem("user") == "test1@gmail.com" ||
-      "test2@gmail.com" ? (
+      {localStorage.getItem("user") == "test2@gmail.com" ||
+      localStorage.getItem("user") == "test1@gmail.com" ? (
         <p onClick={handleCreateEventNavigation}>
-          <i className="fa-solid fa-plus"></i>Create New Event
+          <i className="fa-solid fa-plus"></i>Create Event
         </p>
       ) : null}
       <p onClick={handleSignOut}>

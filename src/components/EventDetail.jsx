@@ -5,6 +5,7 @@ import { db, auth } from "../Config/firebase-config";
 import { getDoc, doc, deleteDoc } from "firebase/firestore";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+// import  RelatedEvents  from './RelatedEvents';
 
 const EventDetail = () => {
   const [eventDetails, setEventDetails] = useState({});
@@ -46,7 +47,7 @@ const EventDetail = () => {
   };
 
   return (
-    <main className="eventdetails">
+    <><main className="eventdetails">
       <img src={eventDetails.imgUrl} alt="image" />
       <div className="details">
         <h1>{eventDetails.title}</h1>
@@ -60,10 +61,9 @@ const EventDetail = () => {
         </p>
         <p id="mode">
           <i className="fa-solid fa-location-dot"></i>
-          {eventDetails.mode}
-          {eventDetails.mode == "Offline" ? (
-            <span>, {eventDetails.location}</span>
-          ) : null}
+          {eventDetails.mode == "Offline" || "" ? (
+            <span>{eventDetails.location}</span>
+          ) : <span>Online</span>}
         </p>
         <span>What You'll Learn:</span>
         <p>{eventDetails.description}</p>
@@ -76,7 +76,8 @@ const EventDetail = () => {
           </button>
         ) : null}
       </div>
-    </main>
+
+    </main></>
   );
 };
 

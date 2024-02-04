@@ -24,6 +24,8 @@ import {
 } from "firebase/firestore";
 import EventDetail from "./components/EventDetail";
 import Footer from "./components/Footer";
+import './components/mediaquery.css'
+// import RelatedEvents from "./components/RelatedEvents";
 
 function App() {
   const navigate = useNavigate();
@@ -116,7 +118,7 @@ function App() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    if (!title || !category || !description || !mode || !date || !registerLink) {
+    if (!title || !category || !description || !date || !registerLink) {
       toast.error("Please Provide All Information");
     } else {
       try {
@@ -145,7 +147,7 @@ function App() {
 
   return (
     <div className="App">
-      <ToastContainer />
+      <ToastContainer style={{zIndex : 99}}/>
       <Navbar
         profileActive={profileActive}
         setProfileActive={setProfileActive}

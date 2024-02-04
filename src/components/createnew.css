@@ -32,6 +32,7 @@ form h1 {
   border-radius: 20px;
   font-weight: 500;
   cursor: pointer;
+  width: inherit;
 }
 select {
   background: transparent;
@@ -90,7 +91,7 @@ form textarea {
   color: black;
   font-weight: bold;
   height: 40px;
-  width: 100%;
+  width: inherit;
 }
 .mode div {
   display: flex;

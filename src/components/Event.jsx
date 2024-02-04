@@ -8,7 +8,10 @@ const Event = ({ item, id }) => {
         <img src={item.imgUrl} alt="image" width={330} height={200} />
         <p className="category">{item.category}</p>
         <h1>{item.title}</h1>
-        <p>{item.date}</p>
+        <p>
+          <i className="fa-solid fa-calendar-days" style={{color:'red',marginRight:'10px'}}></i>
+          {item.date}
+        </p>
       </main>
     </Link>
   );

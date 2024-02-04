@@ -236,6 +236,7 @@ html {
   border-radius: 5px 5px 0 0;
   object-fit: cover;
   margin-bottom: 10px;
+  width: 100%;
 }
 .card h1 {
   padding-left: 10px;
@@ -283,3 +284,5 @@ html {
     transform: rotate(360deg);
   }
 }
+
+
