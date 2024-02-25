@@ -13,7 +13,7 @@ const EventDetail = () => {
 
   const params = useParams();
   //const sliced = params.id.slice(1);
-  console.log(params);
+  //console.log(params);
 
   useEffect(() => {
     const getEventDetail = async () => {
@@ -22,9 +22,9 @@ const EventDetail = () => {
         const data = await getDoc(collectionRef);
         const filteredData = data.data();
         // console.log(data);
-        console.log(data.data());
+        //console.log(data.data());
         setEventDetails(filteredData);
-        console.log(eventDetails);
+        //console.log(eventDetails);
       } catch (err) {
         console.log(err);
       }

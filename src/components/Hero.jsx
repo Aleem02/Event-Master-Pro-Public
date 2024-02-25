@@ -10,13 +10,17 @@ const Hero = () => {
           <br /> Celeberate: Your <br /> Events, Our Platform!
         </h1>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate
-          officia a commodi amet accusamus qui. Perspiciatis, sed ducimus.
-          Suscipit ut, iste aperiam labore perferendis iusto eum aut? Aperiam,
-          nemo beatae.
+          the ultimate tool for flawless events. Simplify planning, delight
+          guests, and exceed expectations effortlessly. Say hello to stress-free
+          success.
         </p>
         <button>
-          <a href="#available-events" style={{textDecoration:'none',color:'white'}}>Explore More..</a>
+          <a
+            href="#available-events"
+            style={{ textDecoration: "none", color: "white" }}
+          >
+            Explore Events..
+          </a>
         </button>
       </section>
       <img src={hero} alt="hero" width={400} height={400} />

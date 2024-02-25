@@ -90,10 +90,12 @@ const Events = ({ dbData, activeCategory, setActiveCategory, isLoading }) => {
         <div className="event-card">
           {isLoading ? (
             <span className="loader"></span>
-          ) : (
+          ) : dbData.length ? (
             dbData.map((item) => (
               <Event key={item.id} item={item} id={item.id} />
             ))
+          ) : (
+            <p style={{ textAlign: "center" }}>No available Events</p>
           )}
         </div>
       </main>

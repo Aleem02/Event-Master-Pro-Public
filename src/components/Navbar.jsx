@@ -5,9 +5,9 @@ const Navbar = ({ profileActive, setProfileActive }) => {
   return (
     <nav className="navbar">
       <Link to="/" className="logo">
-        EventLY
+        EventMaster.Pro
       </Link>
-      {!localStorage.getItem("user") ? (
+      {/* {!localStorage.getItem("user") ? (
         <Link to="/login">
           <button className="login">Login</button>
         </Link>
@@ -19,7 +19,7 @@ const Navbar = ({ profileActive, setProfileActive }) => {
         >
           Your Profile
         </p>
-      )}
+      )} */}
     </nav>
   );
 };

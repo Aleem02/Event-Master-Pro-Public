@@ -10,6 +10,7 @@ const Footer = () => {
         marginTop: "50px",
         color: "white",
         fontWeight: "bold",
+        
       }}
     >
       All Rights Reserved By Mohamed Aleem
