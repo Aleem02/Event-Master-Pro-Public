@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 const Event = ({ item, id }) => {
   const date = new Date();
   const format = `${date.getFullYear()}-${
-    date.getMonth() < 9 ? "0" : null
-  }${date.getMonth()+1}-${date.getDate()}`;
+    date.getMonth() < 10 ? "0" : null
+  }${date.getMonth()}-${date.getDate()}`;
   return (
     <Link to={`/${id}`} style={{ textDecoration: "none" }}>
       <main className="card">
