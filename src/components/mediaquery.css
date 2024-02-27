@@ -107,4 +107,7 @@
 .mode div:last-child{
     width: 100%;
 }
+  .footer{
+    font-size:small
+  }
 }
