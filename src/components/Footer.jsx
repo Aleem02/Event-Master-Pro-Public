@@ -3,6 +3,7 @@ import React from "react";
 const Footer = () => {
   return (
     <div
+      className="footer"
       style={{
         backgroundColor: "blue",
         textAlign: "center",
